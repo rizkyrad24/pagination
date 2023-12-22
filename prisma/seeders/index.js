@@ -1,17 +1,10 @@
 const { model } = require("../model");
 const { faker } = require("@faker-js/faker");
+const userSeeder = require("./user.js");
 
 (async () => {
   try {
-    await model.user.deleteMany({});
-    for (let index = 0; index < 50; index++) {
-      await model.user.create({
-        data: {
-          name: faker.person.fullName(),
-          email: faker.internet.email()
-        },
-      });
-    }
+    userSeeder();
   } catch (error) {
     console.error(error);
 

@@ -14,6 +14,13 @@ model User {
   id String @id @default(uuid()) @db.Char(36)
   name String @db.VarChar(255)
   email String @db.VarChar(255)
+  age Int?
+  gender Gender?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+enum Gender {
+  male
+  female
 }
