@@ -12,7 +12,7 @@ router.get("/", async function (req, res, next) {
   const paginated = await model.user.findMany({
     take: parseInt(page.size),
     skip: offsite,
-    orderBy: [{ name: "asc" }],
+    orderBy: [{ name: "asc" }]
   });
   const total = await model.user.count();
   return res.json({
@@ -24,9 +24,9 @@ router.get("/", async function (req, res, next) {
         lastPage: Math.ceil(total / parseInt(page.size)),
         perPage: page.size,
         to: Math.min(offsite + parseInt(page.size), total),
-        total,
-      },
-    },
+        total
+      }
+    }
   });
 });
 
@@ -41,17 +41,17 @@ function getOffsetFromPagination(pageNumber, size) {
 }
 
 router.get("/agregate", async (req, res, next) => {
-  const [ agrMale, agrFemale ] = await model.$transaction([
+  const [agrMale, agrFemale] = await model.$transaction([
     model.user.aggregate({
-        _min: {
-          age: true
-        },
-        _count: {
-          gender: true
-        },
-        where: {
-          gender: "male"
-        }
+      _min: {
+        age: true
+      },
+      _count: {
+        gender: true
+      },
+      where: {
+        gender: "male"
+      }
     }),
     model.user.aggregate({
       _min: {
@@ -63,8 +63,8 @@ router.get("/agregate", async (req, res, next) => {
       where: {
         gender: "female"
       }
-  }),
-  ])
+    })
+  ]);
   return res.json({ agrMale, agrFemale });
 });
 
@@ -76,8 +76,8 @@ router.get("/group-by", async (req, res, next) => {
     },
     _count: {
       gender: true
-    },
-  })
+    }
+  });
   return res.json({ groupBy });
 });
 
